@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CosplayApp.Views.CosPlan"
+             Title="{Binding Name}"
+             xmlns:models="clr-namespace:CosplayApp"
+             x:DataType="models:CosplayCard">
+    <ScrollView>
+        <VerticalStackLayout Padding="20"
+                             Spacing="10"
+                             VerticalOptions="StartAndExpand">
+            <Label Text="Name" />
+            <Entry Text="{Binding Name}" />
+            <Image Source="{Binding MainImage}"/>
+            <Button Text="Save"
+                    Clicked="OnSaveClicked" />
+            <Button Text="Delete"
+                    Clicked="OnDeleteClicked" />
+            <Button Text="TakePhoto"
+                    Clicked="TakePhoto" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

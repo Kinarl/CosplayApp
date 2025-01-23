@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="CosplayApp.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:CosplayApp"
+    xmlns:views="clr-namespace:CosplayApp.Views"
+    Shell.FlyoutBehavior="Disabled"
+    Title="CosplayApp">
+
+    <ShellContent 
+            Title="CosplaysPage"
+            Icon="buton.png"
+            ContentTemplate="{DataTemplate views:CosplaysPage}"
+            Route="CosplaysPage"/>
+    <ShellContent 
+            Title="CosPlan"
+            Icon="buton.png"
+            ContentTemplate="{DataTemplate views:CosPlan}"
+            Route="CosPlan"/>
+</Shell>
