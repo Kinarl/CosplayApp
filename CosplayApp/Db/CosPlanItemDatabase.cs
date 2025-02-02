@@ -1,12 +1,11 @@
 ﻿using CosplayApp.Resources;
 using SQLite;
 
-namespace CosplayApp
-{
+namespace CosplayApp;
+
     public class CosPlanItemDatabase
     {
         SQLiteAsyncConnection Database;
-
 
         async Task Init()
         {
@@ -21,13 +20,6 @@ namespace CosplayApp
         {
             await Init();
             return await Database.Table<CosplayCard>().ToListAsync();
-        }
-
-        public async Task<List<CosplayCard>> GetItemsNotDoneAsync()
-        {
-            await Init();
-            return await Database.Table<CosplayCard>().Where(t => t.Done).ToListAsync();
-
         }
 
         public async Task<CosplayCard> GetItemAsync(int id)
@@ -51,4 +43,3 @@ namespace CosplayApp
             return await Database.DeleteAsync(item);
         }
     }
-}

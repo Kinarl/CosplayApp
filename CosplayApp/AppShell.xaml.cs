@@ -10,6 +10,8 @@ namespace CosplayApp
 
             Routing.RegisterRoute(nameof(CosplaysPage), typeof(CosplaysPage));
             Routing.RegisterRoute(nameof(CosPlan), typeof(CosPlan));
+            Routing.RegisterRoute(nameof(ToDoListPage), typeof(ToDoListPage));
+            Routing.RegisterRoute(nameof(ToDoItemPage), typeof(ToDoItemPage));
         }
     }
 }

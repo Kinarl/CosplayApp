@@ -2,7 +2,6 @@ using System.Collections.ObjectModel;
 
 namespace CosplayApp.Views;
 
-
 [QueryProperty("NewCard", "NewCard")]
 public partial class CosPlan : ContentPage
 {
@@ -52,6 +51,14 @@ public partial class CosPlan : ContentPage
             NewCard.MainImage = photo.FullPath;
             await database.SaveItemAsync(NewCard);
         }
+    }
+
+    private async void OnToDoClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync(nameof(ToDoListPage), true, new Dictionary<string, object>()
+        {
+            ["CosplayCard"] = NewCard
+        });
     }
 }
 

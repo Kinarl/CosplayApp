@@ -23,7 +23,6 @@ public partial class CosplaysPage : ContentPage
             Cosplays.Clear();
             foreach (var item in items)
                 Cosplays.Add(item);
-
         });
     }
 

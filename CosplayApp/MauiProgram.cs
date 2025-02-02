@@ -20,8 +20,11 @@ namespace CosplayApp
                 });
             builder.Services.AddSingleton<CosplaysPage>();
             builder.Services.AddTransient<CosPlan>();
+            builder.Services.AddTransient<ToDoListPage>();
+            builder.Services.AddTransient<ToDoItemPage>();
 
             builder.Services.AddSingleton<CosPlanItemDatabase>();
+            builder.Services.AddTransient<ToDoItemDatabase>();
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
