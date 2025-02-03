@@ -11,7 +11,7 @@ public partial class ToDoItemPage : ContentPage
     }
 
     ToDoItemDatabase database;
-    public ToDoItemPage(ToDoItemDatabase todoItemDatabase)
+    public ToDoItemPage(ToDoItemDatabase todoItemDatabase)  
     {
         InitializeComponent();
         database = todoItemDatabase;
@@ -26,7 +26,10 @@ public partial class ToDoItemPage : ContentPage
         }
 
         await database.SaveItemAsync(Item);
-        await Shell.Current.GoToAsync("..");
+        await Shell.Current.GoToAsync(nameof(ToDoListPage), true, new Dictionary<string, object>
+        {
+            ["CosplayCardId"] = Item.CosplayCardId
+        });
     }
 
     async void OnDeleteClicked(object sender, EventArgs e)
@@ -34,11 +37,17 @@ public partial class ToDoItemPage : ContentPage
         if (Item.Id == 0)
             return;
         await database.DeleteItemAsync(Item);
-        await Shell.Current.GoToAsync("..");
+        await Shell.Current.GoToAsync(nameof(ToDoListPage), false, new Dictionary<string, object>()
+        {
+            ["CosplayCardId"] = Item.CosplayCardId
+        });
     }
 
     async void OnCancelClicked(object sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync("..");
+        await Shell.Current.GoToAsync(nameof(ToDoListPage), false, new Dictionary<string, object>()
+        {
+            ["CosplayCardId"] = Item.CosplayCardId
+        });
     }
 }

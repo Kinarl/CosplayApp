@@ -3,14 +3,10 @@ using System.Collections.ObjectModel;
 
 namespace CosplayApp.Views;
 
-[QueryProperty(nameof(CosplayCard), "CosplayCard")]
+[QueryProperty(nameof(CosplayCardId), "CosplayCardId")]
 public partial class ToDoListPage : ContentPage
 {
-    public CosplayCard CosplayCard
-    {
-        get => BindingContext as CosplayCard;
-        set => BindingContext = value;
-    }
+    public int CosplayCardId;
 
     ToDoItemDatabase database;
     public ObservableCollection<ToDoItem> ToDoItems { get; set; } = new();
@@ -25,9 +21,9 @@ public partial class ToDoListPage : ContentPage
     protected override async void OnNavigatedTo(NavigatedToEventArgs args)
     {
         base.OnNavigatedTo(args);
-        if (CosplayCard.ToDoItems != null)
+        var items = await database.GetItemsByCardAsync(CosplayCardId);
+        if (items != null && items.Count != 0)
         {
-            var items = await database.GetItemsByCardAsync(CosplayCard);
             MainThread.BeginInvokeOnMainThread(() =>
             {
                 ToDoItems.Clear();
@@ -42,11 +38,17 @@ public partial class ToDoListPage : ContentPage
                 Name = "Костюм",
                 Description = "Найти референсы",
                 Done = false,
-                CosplayCard = CosplayCard
+                CosplayCardId = CosplayCardId
             };
             ToDoItems.Add(item);
             await database.SaveItemAsync(item);
-            CosplayCard.ToDoItems = ToDoItems;
+            items = await database.GetItemsByCardAsync(CosplayCardId);
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                ToDoItems.Clear();
+                foreach (var item in items)
+                    ToDoItems.Add(item);
+            });
         }
         
     }
@@ -55,7 +57,13 @@ public partial class ToDoListPage : ContentPage
     {
         await Shell.Current.GoToAsync(nameof(ToDoItemPage), true, new Dictionary<string, object>
         {
-            ["Item"] = new ToDoItem()
+            ["Item"] = new ToDoItem() 
+            {
+                Name = "Костюм",
+                Description = "Найти референсы",
+                Done = false,
+                CosplayCardId = CosplayCardId
+            }
         });
     }
 

@@ -24,10 +24,10 @@ namespace CosplayApp
             return await Database.Table<ToDoItem>().ToListAsync();
         }
 
-        public async Task<List<ToDoItem>> GetItemsByCardAsync(CosplayCard cosplaycard)
+        public async Task<List<ToDoItem>> GetItemsByCardAsync(int id)
         {
             await Init();
-            return await Database.Table<ToDoItem>().Where(i => cosplaycard.ID == i.CosplayCardId).ToListAsync();
+            return await Database.Table<ToDoItem>().Where(i => id == i.CosplayCardId).ToListAsync();
         }
 
         public async Task<ToDoItem> GetItemAsync(int id)

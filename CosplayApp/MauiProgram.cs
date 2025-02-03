@@ -18,13 +18,13 @@ namespace CosplayApp
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
-            builder.Services.AddSingleton<CosplaysPage>();
+            builder.Services.AddTransient<CosplaysPage>();
             builder.Services.AddTransient<CosPlan>();
             builder.Services.AddTransient<ToDoListPage>();
             builder.Services.AddTransient<ToDoItemPage>();
 
             builder.Services.AddSingleton<CosPlanItemDatabase>();
-            builder.Services.AddTransient<ToDoItemDatabase>();
+            builder.Services.AddSingleton<ToDoItemDatabase>();
 #if DEBUG
             builder.Logging.AddDebug();
 #endif

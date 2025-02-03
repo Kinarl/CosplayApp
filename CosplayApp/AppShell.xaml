@@ -13,14 +13,5 @@
             Icon="buton.png"
             ContentTemplate="{DataTemplate views:CosplaysPage}"
             Route="CosplaysPage"/>
-    <ShellContent 
-            Title="CosPlan"
-            Icon="buton.png"
-            ContentTemplate="{DataTemplate views:CosPlan}"
-            Route="CosPlan"/>
-    <ShellContent 
-        Title="ToDoListPage"
-        Icon="buton.png"
-        ContentTemplate="{DataTemplate views:ToDoListPage}"
-        Route="ToDoListPage"/>
+
 </Shell>

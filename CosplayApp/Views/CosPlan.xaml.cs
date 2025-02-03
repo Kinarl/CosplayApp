@@ -55,9 +55,9 @@ public partial class CosPlan : ContentPage
 
     private async void OnToDoClicked(object sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync(nameof(ToDoListPage), true, new Dictionary<string, object>()
+        await Shell.Current.GoToAsync(nameof(ToDoListPage), false, new Dictionary<string, object>()
         {
-            ["CosplayCard"] = NewCard
+            ["CosplayCardId"] = NewCard.ID
         });
     }
 }

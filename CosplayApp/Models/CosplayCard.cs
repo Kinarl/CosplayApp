@@ -12,9 +12,6 @@ namespace CosplayApp
         public string? Name { get; set; }
         public string? MainImage { get; set; }
         public bool Done { get; set; }
-
-        [OneToMany]
-        public ObservableCollection<ToDoItem>? ToDoItems { get; set; }
     }
 
 }
