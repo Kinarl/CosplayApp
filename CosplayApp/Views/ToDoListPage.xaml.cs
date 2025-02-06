@@ -1,20 +1,17 @@
-using SQLiteNetExtensions.Attributes;
 using System.Collections.ObjectModel;
 
 namespace CosplayApp.Views;
 
-[QueryProperty(nameof(CosplayCardId), "CosplayCardId")]
 public partial class ToDoListPage : ContentPage
 {
     public int CosplayCardId;
 
-    ToDoItemDatabase database;
+    ToDoItemDatabase database = App.DatabaseTD;
     public ObservableCollection<ToDoItem> ToDoItems { get; set; } = new();
 
-    public ToDoListPage(ToDoItemDatabase toDoPlanItemDatabase, int cardId)
+    public ToDoListPage(int cardId)
     {
         InitializeComponent();
-        database = toDoPlanItemDatabase;
         CosplayCardId = cardId;
         BindingContext = this;
     }
@@ -40,7 +37,7 @@ public partial class ToDoListPage : ContentPage
             Done = false,
             CosplayCardId = CosplayCardId
         };
-        await Navigation.PushAsync(new ToDoItemPage(database, item));
+        await Navigation.PushAsync(new ToDoItemPage(item));
     }
 
     private async void CollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -48,6 +45,6 @@ public partial class ToDoListPage : ContentPage
         if (e.CurrentSelection.FirstOrDefault() is not ToDoItem item)
             return;
 
-        await Navigation.PushAsync(new ToDoItemPage(database, item));
+        await Navigation.PushAsync(new ToDoItemPage(item));
     }
 }

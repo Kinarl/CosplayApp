@@ -1,8 +1,7 @@
-using System.Windows.Input;
+using System.ComponentModel;
 
 namespace CosplayApp.Views;
 
-[QueryProperty("NewCard", "NewCard")]
 public partial class CosPlan : ContentPage
 {
     public CosplayCard NewCard
@@ -11,16 +10,12 @@ public partial class CosPlan : ContentPage
         set => BindingContext = value;
     }
 
-    CosPlanItemDatabase database;
-    ToDoItemDatabase databaseTD;
+    CosPlanItemDatabase database = App.DatabaseCos;
 
-    public CosPlan(CosPlanItemDatabase cosPlanItemDatabase, ToDoItemDatabase databaseToDo, CosplayCard card)
+    public CosPlan(CosplayCard card)
     {
         InitializeComponent();
-        database = cosPlanItemDatabase;
-        databaseTD = databaseToDo;
         NewCard = card;
-        
     }
 
     async void OnSaveClicked(object sender, EventArgs e)
@@ -49,12 +44,15 @@ public partial class CosPlan : ContentPage
         {
             NewCard.MainImage = photo.FullPath;
             await database.SaveItemAsync(NewCard);
+            var stream = await photo.OpenReadAsync();
+            myImage.Source = ImageSource.FromStream(() => stream);
         }
+
     }
 
     private async void OnToDoClicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new ToDoListPage(databaseTD, NewCard.ID));
+        await Navigation.PushAsync(new ToDoListPage(NewCard.ID));
     }
 }
 

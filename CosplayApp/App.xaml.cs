@@ -17,7 +17,7 @@ namespace CosplayApp
 
         protected override Window CreateWindow(IActivationState activationState)
         {
-            return new Window(new NavigationPage(new CosplaysPage(DatabaseCos, DatabaseTD)));
+            return new Window(new NavigationPage(new CosplaysPage()));
         }
     }
 }

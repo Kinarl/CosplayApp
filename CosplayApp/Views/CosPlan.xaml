@@ -10,10 +10,10 @@
                                Spacing="10"
                                VerticalOptions="StartAndExpand">
 
-            <Grid ColumnDefinitions="40, Auto" Padding="20">
-                <Image Grid.Column="0" Source ="{Binding MainImage}"
+            <Grid ColumnDefinitions="40, Auto" Padding="1">
+                <Image x:Name="myImage" Grid.Column="0" Source ="{Binding MainImage}"
                Aspect="AspectFill"/>
-                <Entry Grid.Column="1" Text="{Binding Name}" HorizontalOptions="Center" VerticalOptions="Center" FontSize="22"
+                <Entry Grid.Column="1" Text="{Binding Name}" HorizontalOptions="Center" VerticalOptions="Center" FontSize="26"
      VerticalTextAlignment="End"/>
             </Grid>
             <Button Text="Этапы"

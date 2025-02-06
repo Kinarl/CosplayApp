@@ -1,18 +1,14 @@
 using System.Collections.ObjectModel;
-using CosplayApp;
 namespace CosplayApp.Views;
 
 public partial class CosplaysPage : ContentPage
 {
     CosPlanItemDatabase database = App.DatabaseCos;
-    ToDoItemDatabase databaseToDo = App.DatabaseTD;
     public ObservableCollection<CosplayCard> Cosplays { get; set; } = new();
 
-    public CosplaysPage(CosPlanItemDatabase cosPlanItemDatabase, ToDoItemDatabase toDoItemDatabase)
+    public CosplaysPage()
 	{
 		InitializeComponent();
-        //database = cosPlanItemDatabase;
-        //databaseToDo = toDoItemDatabase;
         BindingContext = this;
     }
 
@@ -31,7 +27,7 @@ public partial class CosplaysPage : ContentPage
     async void OnItemAdded(object sender, EventArgs e)
     {
         CosplayCard NewCard = new CosplayCard ();
-        await Navigation.PushAsync(new CosPlan(database, databaseToDo, NewCard));
+        await Navigation.PushAsync(new CosPlan(NewCard));
     }
 
     private async void CollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -39,6 +35,6 @@ public partial class CosplaysPage : ContentPage
         if (e.CurrentSelection.FirstOrDefault() is not CosplayCard NewCard)
             return;
 
-        await Navigation.PushAsync(new CosPlan(database, databaseToDo, NewCard));
+        await Navigation.PushAsync(new CosPlan(NewCard));
     }
 }

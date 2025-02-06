@@ -1,8 +1,5 @@
-using CosplayApp;
 namespace CosplayApp.Views;
 
-
-[QueryProperty("Item", "Item")]
 public partial class ToDoItemPage : ContentPage
 {
     public ToDoItem Item
@@ -12,10 +9,10 @@ public partial class ToDoItemPage : ContentPage
     }
 
     ToDoItemDatabase database = App.DatabaseTD;
-    public ToDoItemPage(ToDoItemDatabase todoItemDatabase, ToDoItem item)  
+
+    public ToDoItemPage(ToDoItem item)  
     {
         InitializeComponent();
-        //database = todoItemDatabase;
         Item = item;
     }
 
