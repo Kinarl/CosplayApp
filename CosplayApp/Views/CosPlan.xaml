@@ -7,23 +7,23 @@
              x:DataType="models:CosplayCard">
     <ScrollView>
         <VerticalStackLayout Padding="20"
-                             Spacing="10"
-                             VerticalOptions="StartAndExpand">
-            
+                               Spacing="10"
+                               VerticalOptions="StartAndExpand">
+
             <Grid ColumnDefinitions="40, Auto" Padding="20">
                 <Image Grid.Column="0" Source ="{Binding MainImage}"
-            Aspect="AspectFill"/>
+               Aspect="AspectFill"/>
                 <Entry Grid.Column="1" Text="{Binding Name}" HorizontalOptions="Center" VerticalOptions="Center" FontSize="22"
- VerticalTextAlignment="End"/>
+     VerticalTextAlignment="End"/>
             </Grid>
             <Button Text="Этапы"
-                    Clicked="OnToDoClicked"/>
+                      Clicked="OnToDoClicked"/>
             <Button Text="Save"
-                    Clicked="OnSaveClicked" />
+                      Clicked="OnSaveClicked" />
             <Button Text="Delete"
-                    Clicked="OnDeleteClicked" />
+                     Clicked="OnDeleteClicked" />
             <Button Text="TakePhoto"
-                    Clicked="TakePhoto" />
+                     Clicked="TakePhoto" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

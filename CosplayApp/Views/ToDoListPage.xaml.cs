@@ -11,10 +11,11 @@ public partial class ToDoListPage : ContentPage
     ToDoItemDatabase database;
     public ObservableCollection<ToDoItem> ToDoItems { get; set; } = new();
 
-    public ToDoListPage(ToDoItemDatabase cosPlanItemDatabase)
+    public ToDoListPage(ToDoItemDatabase toDoPlanItemDatabase, int cardId)
     {
         InitializeComponent();
-        database = cosPlanItemDatabase;
+        database = toDoPlanItemDatabase;
+        CosplayCardId = cardId;
         BindingContext = this;
     }
 
@@ -22,49 +23,24 @@ public partial class ToDoListPage : ContentPage
     {
         base.OnNavigatedTo(args);
         var items = await database.GetItemsByCardAsync(CosplayCardId);
-        if (items != null && items.Count != 0)
+        MainThread.BeginInvokeOnMainThread(() =>
         {
-            MainThread.BeginInvokeOnMainThread(() =>
-            {
-                ToDoItems.Clear();
-                foreach (var item in items)
-                    ToDoItems.Add(item);
-            });
-        }
-        else
-        {
-            var item = new ToDoItem()
-            {
-                Name = "Костюм",
-                Description = "Найти референсы",
-                Done = false,
-                CosplayCardId = CosplayCardId
-            };
-            ToDoItems.Add(item);
-            await database.SaveItemAsync(item);
-            items = await database.GetItemsByCardAsync(CosplayCardId);
-            MainThread.BeginInvokeOnMainThread(() =>
-            {
-                ToDoItems.Clear();
-                foreach (var item in items)
-                    ToDoItems.Add(item);
-            });
-        }
-        
+            ToDoItems.Clear();
+            foreach (var item in items)
+                ToDoItems.Add(item);
+        });
     }
 
     async void OnItemAdded(object sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync(nameof(ToDoItemPage), true, new Dictionary<string, object>
+        ToDoItem item = new ToDoItem()
         {
-            ["Item"] = new ToDoItem() 
-            {
-                Name = "Костюм",
-                Description = "Найти референсы",
-                Done = false,
-                CosplayCardId = CosplayCardId
-            }
-        });
+            Name = "Костюм",
+            Description = "Найти референсы",
+            Done = false,
+            CosplayCardId = CosplayCardId
+        };
+        await Navigation.PushAsync(new ToDoItemPage(database, item));
     }
 
     private async void CollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -72,9 +48,6 @@ public partial class ToDoListPage : ContentPage
         if (e.CurrentSelection.FirstOrDefault() is not ToDoItem item)
             return;
 
-        await Shell.Current.GoToAsync(nameof(ToDoItemPage), true, new Dictionary<string, object>
-        {
-            ["Item"] = item
-        });
+        await Navigation.PushAsync(new ToDoItemPage(database, item));
     }
 }

@@ -9,8 +9,6 @@ namespace CosplayApp
         {
             var builder = MauiApp.CreateBuilder();
 
-            
-
             builder
                 .UseMauiApp<App>()
                 .ConfigureFonts(fonts =>
@@ -20,8 +18,8 @@ namespace CosplayApp
                 });
             builder.Services.AddTransient<CosplaysPage>();
             builder.Services.AddTransient<CosPlan>();
-            builder.Services.AddTransient<ToDoListPage>();
             builder.Services.AddTransient<ToDoItemPage>();
+            builder.Services.AddTransient<ToDoListPage>();
 
             builder.Services.AddSingleton<CosPlanItemDatabase>();
             builder.Services.AddSingleton<ToDoItemDatabase>();

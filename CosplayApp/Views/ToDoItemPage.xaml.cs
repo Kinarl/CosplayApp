@@ -1,3 +1,4 @@
+using CosplayApp;
 namespace CosplayApp.Views;
 
 
@@ -10,11 +11,12 @@ public partial class ToDoItemPage : ContentPage
         set => BindingContext = value;
     }
 
-    ToDoItemDatabase database;
-    public ToDoItemPage(ToDoItemDatabase todoItemDatabase)  
+    ToDoItemDatabase database = App.DatabaseTD;
+    public ToDoItemPage(ToDoItemDatabase todoItemDatabase, ToDoItem item)  
     {
         InitializeComponent();
-        database = todoItemDatabase;
+        //database = todoItemDatabase;
+        Item = item;
     }
 
     async void OnSaveClicked(object sender, EventArgs e)
@@ -26,10 +28,7 @@ public partial class ToDoItemPage : ContentPage
         }
 
         await database.SaveItemAsync(Item);
-        await Shell.Current.GoToAsync(nameof(ToDoListPage), true, new Dictionary<string, object>
-        {
-            ["CosplayCardId"] = Item.CosplayCardId
-        });
+        await Navigation.PopAsync();
     }
 
     async void OnDeleteClicked(object sender, EventArgs e)
@@ -37,17 +36,11 @@ public partial class ToDoItemPage : ContentPage
         if (Item.Id == 0)
             return;
         await database.DeleteItemAsync(Item);
-        await Shell.Current.GoToAsync(nameof(ToDoListPage), false, new Dictionary<string, object>()
-        {
-            ["CosplayCardId"] = Item.CosplayCardId
-        });
+        await Navigation.PopAsync();
     }
 
     async void OnCancelClicked(object sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync(nameof(ToDoListPage), false, new Dictionary<string, object>()
-        {
-            ["CosplayCardId"] = Item.CosplayCardId
-        });
+        await Navigation.PopAsync();
     }
 }

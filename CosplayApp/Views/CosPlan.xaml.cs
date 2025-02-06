@@ -1,11 +1,10 @@
-using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace CosplayApp.Views;
 
 [QueryProperty("NewCard", "NewCard")]
 public partial class CosPlan : ContentPage
 {
-    public ObservableCollection<CosplayCard> Cosplays { get; set; } = new();
     public CosplayCard NewCard
     {
         get => BindingContext as CosplayCard;
@@ -13,11 +12,15 @@ public partial class CosPlan : ContentPage
     }
 
     CosPlanItemDatabase database;
+    ToDoItemDatabase databaseTD;
 
-    public CosPlan(CosPlanItemDatabase cosPlanItemDatabase)
+    public CosPlan(CosPlanItemDatabase cosPlanItemDatabase, ToDoItemDatabase databaseToDo, CosplayCard card)
     {
         InitializeComponent();
         database = cosPlanItemDatabase;
+        databaseTD = databaseToDo;
+        NewCard = card;
+        
     }
 
     async void OnSaveClicked(object sender, EventArgs e)
@@ -30,16 +33,12 @@ public partial class CosPlan : ContentPage
         }
 
         await database.SaveItemAsync(NewCard);
-        await Shell.Current.GoToAsync("..");
-
     }
 
     async void OnDeleteClicked(object sender, EventArgs e)
     {
-        //if (NewCard.ID == 0)
-        //    return;
         await database.DeleteItemAsync(NewCard);
-        await Shell.Current.GoToAsync("..");
+        await Navigation.PopAsync();
     }
 
     private async void TakePhoto(object sender, EventArgs e)
@@ -55,10 +54,7 @@ public partial class CosPlan : ContentPage
 
     private async void OnToDoClicked(object sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync(nameof(ToDoListPage), false, new Dictionary<string, object>()
-        {
-            ["CosplayCardId"] = NewCard.ID
-        });
+        await Navigation.PushAsync(new ToDoListPage(databaseTD, NewCard.ID));
     }
 }
 
